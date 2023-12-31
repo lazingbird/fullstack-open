@@ -1,7 +1,3 @@
 export default function Header(props) {
-  return (
-    <>
-      <h1>{props.name}</h1>
-    </>
-  );
+  return <h1>{props.course.name}</h1>;
 }

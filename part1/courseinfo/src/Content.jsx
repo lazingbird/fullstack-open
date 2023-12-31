@@ -1,17 +1,28 @@
-export default function Content(props) {
+function Content(props) {
   const Part = (props) => {
     return (
       <p>
-        {props.title} {props.exercises}
+        {props.name} {props.exercises}
       </p>
     );
   };
 
   return (
     <div>
-      <Part title={props.title1} exercises={props.exercises1}></Part>
-      <Part title={props.title2} exercises={props.exercises2}></Part>
-      <Part title={props.title3} exercises={props.exercises3}></Part>
+      <Part
+        name={props.parts[0].name}
+        exercises={props.parts[0].exercises}
+      ></Part>
+      <Part
+        name={props.parts[1].name}
+        exercises={props.parts[1].exercises}
+      ></Part>
+      <Part
+        name={props.parts[2].name}
+        exercises={props.parts[2].exercises}
+      ></Part>
     </div>
   );
 }
+
+export default Content;

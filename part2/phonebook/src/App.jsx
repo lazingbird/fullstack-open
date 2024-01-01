@@ -4,13 +4,14 @@ import personsService from "./services/persons";
 import Filter from "./Filter";
 import Form from "./Form";
 import Persons from "./Persons";
-import { unstable_batchedUpdates } from "react-dom";
+import Notification from "./Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [filterName, setFilterName] = useState("");
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     personsService.getAll().then((response) => {
@@ -63,6 +64,10 @@ const App = () => {
             )
           );
         });
+        setNotification(`${newName} phone number changed`);
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
       }
     } else {
       const newObject = {
@@ -74,6 +79,10 @@ const App = () => {
         setPersons(persons.concat(response.data));
         setNewName("");
         setNewPhone("");
+        setNotification(`Added ${newName}`);
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
       });
     }
   };
@@ -90,6 +99,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification}></Notification>
       <Filter filterValue={filterName} onChange={onHandleFilterChange}></Filter>
       <h2>add a new</h2>
       <Form

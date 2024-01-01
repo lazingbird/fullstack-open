@@ -1,0 +1,7 @@
+.notification {
+  background-color: lightgray;
+  border-style: solid;
+  padding: 10px;
+  border-color: green;
+  color: green;
+}

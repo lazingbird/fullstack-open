@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Filter from "./Filter";
 import Form from "./Form";
 import Persons from "./Persons";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", phone: "040-123456", id: 1 },
-    { name: "Ada Lovelace", phone: "39-44-5323523", id: 2 },
-    { name: "Dan Abramov", phone: "12-43-234345", id: 3 },
-    { name: "Mary Poppendieck", phone: "39-23-6423122", id: 4 },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [filterName, setFilterName] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
   const onHandleFilterChange = (event) => {
     setFilterName(event.target.value);
@@ -43,9 +45,14 @@ const App = () => {
     }
   };
 
-  const filterByName = persons.filter((person) =>
-    person.name.toLowerCase().includes(filterName.toLowerCase())
-  );
+  const checkFilter = () => {
+    if (filterName.length > 0) {
+      return persons.filter((person) =>
+        person.name.toLowerCase().includes(filterName.toLowerCase())
+      );
+    }
+    return persons;
+  };
 
   return (
     <div>
@@ -61,7 +68,7 @@ const App = () => {
       ></Form>
       <div>
         <h2>Numbers</h2>
-        <Persons persons={filterByName}></Persons>
+        <Persons persons={checkFilter()}></Persons>
       </div>
     </div>
   );

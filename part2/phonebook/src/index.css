@@ -5,3 +5,11 @@
   border-color: green;
   color: green;
 }
+
+.error {
+  background-color: lightgray;
+  border-style: solid;
+  padding: 10px;
+  border-color: red;
+  color: red;
+}

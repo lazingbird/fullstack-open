@@ -2,23 +2,13 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "phone": "15651561",
+      "phone": "",
       "id": 1
     },
     {
       "name": "Ada Lovelace",
       "phone": "39-44-5323523",
       "id": 2
-    },
-    {
-      "name": "Lucas",
-      "phone": "",
-      "id": 3
-    },
-    {
-      "name": "a",
-      "phone": "",
-      "id": 4
     }
   ]
 }

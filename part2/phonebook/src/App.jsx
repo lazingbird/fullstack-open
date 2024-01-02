@@ -12,6 +12,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState("");
   const [filterName, setFilterName] = useState("");
   const [notification, setNotification] = useState(null);
+  const [success, setSuccess] = useState(true);
 
   useEffect(() => {
     personsService.getAll().then((response) => {
@@ -57,14 +58,27 @@ const App = () => {
           name: newName,
           phone: newPhone,
         };
-        personsService.update(oldObject.id, newObject).then((response) => {
-          setPersons(
-            persons.map((person) =>
-              person.id !== oldObject.id ? person : response.data
-            )
-          );
-        });
+        personsService
+          .update(oldObject.id, newObject)
+          .then((response) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== oldObject.id ? person : response.data
+              )
+            );
+          })
+          .catch((error) => {
+            setNotification(
+              `Information of ${newName} has already been removed from server`
+            );
+            setSuccess(false);
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
+          });
         setNotification(`${newName} phone number changed`);
+        setSuccess(true);
+
         setTimeout(() => {
           setNotification(null);
         }, 5000);
@@ -80,6 +94,7 @@ const App = () => {
         setNewName("");
         setNewPhone("");
         setNotification(`Added ${newName}`);
+        setSuccess(true);
         setTimeout(() => {
           setNotification(null);
         }, 5000);
@@ -99,7 +114,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification}></Notification>
+      <Notification
+        message={notification}
+        isSuccessful={success}
+      ></Notification>
       <Filter filterValue={filterName} onChange={onHandleFilterChange}></Filter>
       <h2>add a new</h2>
       <Form

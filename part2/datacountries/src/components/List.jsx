@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Show from "./Show";
+import ShowWeather from "./ShowWeather";
 
 function ListItem({ element, parentElement }) {
   const [show, setShow] = useState(false);
@@ -39,6 +40,8 @@ function List({ items }) {
           })}
         </ul>
         <img src={items[0].flags.png} alt={`${items[0].name.common} flag`} />
+        <h2>Weather in {items[0].capital}</h2>
+        <ShowWeather capital={items[0].capital}></ShowWeather>
       </div>
     );
   }

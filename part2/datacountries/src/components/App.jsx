@@ -9,6 +9,8 @@ function App() {
   const [countries, setCountries] = useState(null);
   const [filterValue, setFilterValue] = useState(null);
 
+  const API_KEY = import.meta.env.VITE_WEATHER_KEY;
+
   useEffect(() => {
     countriesService
       .getAll()
